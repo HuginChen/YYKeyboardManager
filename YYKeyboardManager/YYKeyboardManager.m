@@ -448,6 +448,18 @@ static int _YYKeyboardViewFrameObserverKey;
                     default: break;
                 }
             }
+        } else if (((int)[self _systemVersion]) == 26) {
+            BOOL one = trans.toFrame.size.height != trans.fromFrame.size.height;
+            BOOL two = trans.toFrame.origin.y < window.frame.size.height;
+            BOOL three = CGRectGetMaxY(trans.toFrame) == window.frame.size.height;
+            BOOL four = trans.toFrame.origin.y > trans.fromFrame.origin.y;
+            BOOL five = trans.toFrame.size.height < 100;
+            if (one && two && three && four && five) {
+                trans.toFrame.origin.y += trans.toFrame.size.height;
+                trans.animationDuration = 0.25;
+                trans.animationCurve = 7;
+                trans.animationOption = 7 << 16;
+            }
         }
     } else {
         trans.toFrame = _observedToFrame;
